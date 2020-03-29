@@ -17,8 +17,8 @@ public class Teacher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private int totalStudents;
-    private int SuitableStudents;
+    private int totalStudents;//学生数
+    private int SuitableStudents;//符合加权学生范围
     @OneToMany(mappedBy = "teacher")
     private List<Course> courses;
     @OneToMany(mappedBy = "teacher")

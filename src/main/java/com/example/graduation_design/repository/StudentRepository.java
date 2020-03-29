@@ -1,9 +1,7 @@
 package com.example.graduation_design.repository;
 
-import com.example.graduation_design.entity.Course;
 import com.example.graduation_design.entity.Student;
 import com.example.graduation_design.entity.Teacher;
-import com.example.graduation_design.entity.directions;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
@@ -20,11 +18,11 @@ public interface StudentRepository extends baseRepository<Student,Integer> {
 
     /**
      * 根据学号id查找学生
-     * @param id
+     * @param sno
      * @return
      */
     @Query("from Student c where c.id=?1")
-    Course findById(int id);
+    Student findById(int sno);
 
 
     /**
@@ -46,8 +44,13 @@ public interface StudentRepository extends baseRepository<Student,Integer> {
      * @return
      */
     @Modifying
-    @Query("update Student c set c.name=?1,c.teacher=?2 where c.id=?3")
-    int updateStudentById(String name,Teacher teacher,int sno);
+    @Query("update Student c set c.stuNo=?1,c.name=?2,c.teacher=?3 where c.id=?4")
+    int updateStudentById(int id,String name,Teacher teacher,int sno);
+
+
+    @Modifying
+    @Query("update Student c set c.teacher=?1 where c.id=?2")
+    int updateStudentById(Teacher teacher,int sno);
 
     /**
      * 根据学号删除学生记录

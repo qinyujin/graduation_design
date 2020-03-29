@@ -11,7 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int stuNo;
     private String name;
     @ManyToOne
