@@ -11,12 +11,15 @@ import java.util.List;
 @NoArgsConstructor
 public class Student {
     @Id
-    private int stuNo;
-    private String name;
+    private int id;
+    @OneToOne
+    @MapsId
+    private User user;
+
+    private double weightScore;//学生加权分数
+
     @ManyToOne
     private Teacher teacher;
-    @OneToMany(mappedBy = "student")
-    private List<expectionDirection> directions;
     @OneToMany(mappedBy = "student")
     private List<selectedCourses> courses;
 }

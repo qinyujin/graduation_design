@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -14,8 +14,12 @@ public class directions {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String detail;
+
+    @Column(columnDefinition = "timestamp default current_timestamp",
+            insertable = false,
+            updatable = false)
+    private LocalDateTime insertTime;
+
     @ManyToOne
-    private Teacher teacher;
-    @OneToMany(mappedBy = "direction")
-    private List<expectionDirection> directions;
+    private Student student;
 }

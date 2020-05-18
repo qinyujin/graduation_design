@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -14,8 +15,13 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String courseName;
-    private int lowestScore;//最低分，由导师设置
+    private double lowestScore;//最低分，由导师设置
     private double weight;//权重
+
+    @Column(columnDefinition = "timestamp default current_timestamp",
+            insertable = false,
+            updatable = false)
+    private LocalDateTime insertTime;
     @ManyToOne
     private Teacher teacher;
     @OneToMany(mappedBy = "course")

@@ -16,13 +16,17 @@ public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
+
+    @OneToOne
+    @MapsId
+    private User user;
+
     private int totalStudents;//学生数
+
     private int SuitableStudents;//符合加权学生范围
+
     @OneToMany(mappedBy = "teacher")
     private List<Course> courses;
     @OneToMany(mappedBy = "teacher")
     private List<Student> students;
-    @OneToMany(mappedBy = "teacher")
-    private List<directions> directions;
 }
