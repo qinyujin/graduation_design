@@ -17,7 +17,7 @@ public class Teacher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
     @MapsId
     private User user;
 

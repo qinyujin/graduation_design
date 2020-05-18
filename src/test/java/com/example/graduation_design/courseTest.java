@@ -2,6 +2,8 @@ package com.example.graduation_design;
 
 import com.example.graduation_design.entity.*;
 import com.example.graduation_design.repository.*;
+import com.example.graduation_design.service.UserService;
+import com.example.graduation_design.service.studentService;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -13,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLOutput;
 import java.time.Year;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
@@ -36,10 +40,24 @@ public class courseTest {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    studentService studentService;
+
 
     @Test
-    public void test1(){
-
+    public void test1() {
+        Student student=new Student();
+        User u=new User();
+        u.setName("Chang");
+        u.setNum("2017214228");
+        u.setPassword("123456");
+        u.setRole(User.Role.STUDENT);
+        student.setUser(u);
+        student.setWeightScore(90);
+studentService.addStudent(student);
     }
 
 }

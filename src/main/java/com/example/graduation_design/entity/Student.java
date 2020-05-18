@@ -12,7 +12,7 @@ import java.util.List;
 public class Student {
     @Id
     private int id;
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
     @MapsId
     private User user;
 
@@ -20,6 +20,9 @@ public class Student {
 
     @ManyToOne
     private Teacher teacher;
+
+    @OneToMany(mappedBy = "student")
+    private List<directions> directionsList;
     @OneToMany(mappedBy = "student")
     private List<selectedCourses> courses;
 }
