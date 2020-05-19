@@ -2,22 +2,16 @@ package com.example.graduation_design;
 
 import com.example.graduation_design.entity.*;
 import com.example.graduation_design.repository.*;
+import com.example.graduation_design.service.TeacherService;
 import com.example.graduation_design.service.UserService;
+import com.example.graduation_design.service.courseService;
 import com.example.graduation_design.service.studentService;
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.repository.core.support.SurroundingTransactionDetectorMethodInterceptor;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.sql.SQLOutput;
-import java.time.Year;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @SpringBootTest
 @Slf4j
@@ -45,19 +39,80 @@ public class courseTest {
 
     @Autowired
     studentService studentService;
+    @Autowired
+    TeacherService teacherService;
+    @Autowired
+    courseService courseService;
 
 
     @Test
-    public void test1() {
-        Student student=new Student();
+    public void addStu(){
         User u=new User();
-        u.setName("Chang");
+        u.setName("Qin");
         u.setNum("2017214228");
         u.setPassword("123456");
         u.setRole(User.Role.STUDENT);
-        student.setUser(u);
-        student.setWeightScore(90);
-studentService.addStudent(student);
+        Student s=new Student();
+        s.setUser(u);
+        studentService.addStudent(s);
     }
 
+    @Test
+    public void test1() {
+        User u=new User();
+        u.setName("BO");
+        u.setPassword("123456");
+        u.setRole(User.Role.TEACHER);
+        u.setNum("0012");
+        Teacher t=new Teacher();
+        t.setUser(u);
+
+        teacherService.addTeacher(t);
+    }
+
+    @Test
+    public void  updatePwd(){
+        userService.updatePwd(3,"我超喜欢常艳超");
+    }
+
+    @Test
+    public void updateTeacher(){
+        teacherService.updateTeacher(4, 10, 20);
+    }
+
+    @Test
+    public void addDirections(){
+        directions direction= new directions();
+        direction.setDetail("Java开发");
+        teacherService.addDirections(direction);
+    }
+
+    @Test
+    public void updateDirection(){
+        teacherService.updateDirection(1, "人工智能");
+    }
+
+    @Test
+    public void adCourse(){
+        Course c=new Course();
+        c.setCourseName("Java");
+        c.setWeight(60.0);
+        c.setLowestScore(50.0);
+        courseService.addCourse(c);
+    }
+
+    @Test
+    public void addCourseStu(){
+        courseService.addStu(1, 80.0, 10);
+    }
+
+    @Test
+    public void updateCourseStu(){
+        courseService.updateCourseStu(1, 10, 85);
+    }
+
+    @Test
+    public void addTeacherStu(){
+        teacherService.addTeacherStu(4, 3);
+    }
 }

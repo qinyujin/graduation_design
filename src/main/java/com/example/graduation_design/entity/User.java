@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class User {
     public enum Role {
-        STUDENT, TEACHER, ADMIN
+        STUDENT, TEACHER
     }
 
     @Id
@@ -25,7 +25,6 @@ public class User {
 
     @Column(unique = true)
     @NotBlank(message = "用户名不能为空")
-    @Size(min = 6,message = "用户名长度不小于{min}")
     private String num;//学号or工号
 
     private String name;

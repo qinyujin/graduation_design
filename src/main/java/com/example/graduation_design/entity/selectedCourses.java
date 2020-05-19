@@ -15,7 +15,6 @@ public class selectedCourses {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Size(max = 100,min = 0,message = "成绩应在0-100之间")
     private double score;
 
     @Column(columnDefinition = "timestamp default current_timestamp",
