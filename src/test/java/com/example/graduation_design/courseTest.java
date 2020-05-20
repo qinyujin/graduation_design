@@ -9,15 +9,21 @@ import com.example.graduation_design.service.studentService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.awt.print.PrinterAbortException;
 
 @SpringBootTest
 @Slf4j
 @Transactional
 @Rollback(value = false)
 public class courseTest {
+    @Value("${my.salt}")
+    private String salt;
 
     @Autowired
     TeacherRepository teacherRepository;
@@ -43,58 +49,60 @@ public class courseTest {
     TeacherService teacherService;
     @Autowired
     courseService courseService;
+    @Autowired
+    PasswordEncoder encoder;
 
 
     @Test
-    public void addStu(){
-        User u=new User();
+    public void addStu() {
+        User u = new User();
         u.setName("Qin");
         u.setNum("2017214228");
-        u.setPassword("123456");
+        u.setPassword(encoder.encode("123456"));
         u.setRole(User.Role.STUDENT);
-        Student s=new Student();
+        Student s = new Student();
         s.setUser(u);
         studentService.addStudent(s);
     }
 
     @Test
     public void test1() {
-        User u=new User();
+        User u = new User();
         u.setName("BO");
         u.setPassword("123456");
         u.setRole(User.Role.TEACHER);
-        u.setNum("0012");
-        Teacher t=new Teacher();
+        u.setNum("123");
+        Teacher t = new Teacher();
         t.setUser(u);
 
         teacherService.addTeacher(t);
     }
 
     @Test
-    public void  updatePwd(){
-        userService.updatePwd(3,"我超喜欢常艳超");
+    public void updatePwd() {
+        userService.updatePwd(3, "我超喜欢常艳超");
     }
 
     @Test
-    public void updateTeacher(){
+    public void updateTeacher() {
         teacherService.updateTeacher(4, 10, 20);
     }
 
     @Test
-    public void addDirections(){
-        directions direction= new directions();
+    public void addDirections() {
+        directions direction = new directions();
         direction.setDetail("Java开发");
         teacherService.addDirections(direction);
     }
 
     @Test
-    public void updateDirection(){
+    public void updateDirection() {
         teacherService.updateDirection(1, "人工智能");
     }
 
     @Test
-    public void adCourse(){
-        Course c=new Course();
+    public void adCourse() {
+        Course c = new Course();
         c.setCourseName("Java");
         c.setWeight(60.0);
         c.setLowestScore(50.0);
@@ -102,17 +110,23 @@ public class courseTest {
     }
 
     @Test
-    public void addCourseStu(){
+    public void addCourseStu() {
         courseService.addStu(1, 80.0, 10);
     }
 
     @Test
-    public void updateCourseStu(){
+    public void updateCourseStu() {
         courseService.updateCourseStu(1, 10, 85);
     }
 
     @Test
-    public void addTeacherStu(){
+    public void addTeacherStu() {
         teacherService.addTeacherStu(4, 3);
+    }
+
+
+    @Test
+    public void testAny() {
+        System.out.println(salt);
     }
 }

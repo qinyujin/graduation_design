@@ -7,16 +7,15 @@ import com.example.graduation_design.repository.StudentRepository;
 import com.example.graduation_design.repository.TeacherRepository;
 import com.example.graduation_design.repository.directionsRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.juli.logging.Log;
-import org.hibernate.loader.plan.build.internal.LoadGraphLoadPlanBuildingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.ExcludeSuperclassListeners;
 
 @Service
 @Slf4j
+@Transactional
 public class TeacherService {
     @Autowired
     private TeacherRepository teacherRepository;

@@ -2,8 +2,6 @@ package com.example.graduation_design.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.usertype.LoggableUserType;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import javax.persistence.*;
 import java.util.List;
