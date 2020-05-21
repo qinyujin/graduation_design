@@ -15,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.print.PrinterAbortException;
 
 @SpringBootTest
 @Slf4j
@@ -58,7 +57,7 @@ public class courseTest {
         User u = new User();
         u.setName("Qin");
         u.setNum("2017214228");
-        u.setPassword(encoder.encode("123456"));
+        u.setPassword(encoder.encode("2017214228"));
         u.setRole(User.Role.STUDENT);
         Student s = new Student();
         s.setUser(u);

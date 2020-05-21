@@ -3,7 +3,32 @@ Content-Type: application/json
 
 {
   "num": "2017214228",
-  "password": "123456"
+  "password": "1001"
+}
+
+###
+
+POST http://localhost:8080/api/teacher/addTeacher
+Content-Type: application/json
+Authorization: 80d645359e0d80ba0a0c97a5e7e3414c8e0463a279990f37b6aa80413f5bcb4c414777762f8b452c7cb941575cf7e1ae
+
+{
+
+    "num": "1002",
+    "name": "Chang",
+    "password": "123456",
+    "role": 1
+
+}
+
+###
+
+PATCH http://localhost:8080/api/updatePwd
+Content-Type: application/json
+Authorization: 80d645359e0d80ba0a0c97a5e7e3414c8e0463a279990f37b6aa80413f5bcb4c414777762f8b452c7cb941575cf7e1ae
+
+{
+  "password": "1001"
 }
 
 ###

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.ExcludeSuperclassListeners;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -57,11 +58,15 @@ public class TeacherService {
     public void addTeacherStu(int tid, int sid) {
         Student s = studentRepository.findById(sid).orElse(null);
         Teacher t = teacherRepository.findById(tid).orElse(null);
-        if (s != null && t!=null && s.getTeacher()==null){
+        if (s != null && t != null && s.getTeacher() == null) {
             s.setTeacher(t);
             studentRepository.save(s);
-        }
-        else if(s.getTeacher().getId()==tid)log.debug("{}", "该学生已选择该导师");
+        } else if (s.getTeacher().getId() == tid) log.debug("{}", "该学生已选择该导师");
         else log.debug("{}", "选择的导师或者学生不存在");
+    }
+
+    public Teacher getTeacherByNum(String num) {
+        Teacher t = teacherRepository.findByUser_Num(num);
+        return t;
     }
 }

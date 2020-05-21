@@ -34,6 +34,12 @@ public class loginController {
     @Value("${my.student}")
     private String StudentRole;
 
+    /**
+     * 用户登录，登录之后才能浏览其他页面
+     * @param user
+     * @param response
+     * @return
+     */
     @PostMapping("login")
     public Map login(@RequestBody User user, HttpServletResponse response) {
         User u = userService.getUserByNum(user.getNum());

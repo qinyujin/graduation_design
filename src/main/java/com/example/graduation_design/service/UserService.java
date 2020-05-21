@@ -4,6 +4,7 @@ import com.example.graduation_design.entity.User;
 import com.example.graduation_design.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder encoder;
 
     public User getUserById(int id) {
         return userRepository.findById(id).orElse(null);
@@ -30,7 +33,7 @@ public class UserService {
     public void updatePwd(int uid,String newPwd){
       User u=  userRepository.findById(uid).orElse(null);
       if(u!=null){
-          u.setPassword(newPwd);
+          u.setPassword(encoder.encode(newPwd));
           userRepository.save(u);
       }
       else log.debug("{}", "没有找到该用户");
