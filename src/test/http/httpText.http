@@ -1,34 +1,146 @@
+### 登录，输入学号/工号和密码
 POST http://localhost:8080/api/login
 Content-Type: application/json
 
 {
   "num": "2017214228",
-  "password": "1001"
+  "password": "2017214228"
 }
 
-###
+
+### 添加学生
+POST http://localhost:8080/api/teacher/postStu
+Content-Type: application/json
+Authorization: fd1d361314ec83428c05fac1bb3057143dff5ca6e7c209c3f61e4457c82905ff99d58e250c95d4bba4a0712f184daa18
+
+{
+  "name": "Wang",
+  "num": "2017214229",
+  "password": "2017214229",
+  "role": 0
+}
+
+### 添加老师（需要有老师身份才行，拦截器还未添加）
 
 POST http://localhost:8080/api/teacher/addTeacher
 Content-Type: application/json
-Authorization: 80d645359e0d80ba0a0c97a5e7e3414c8e0463a279990f37b6aa80413f5bcb4c414777762f8b452c7cb941575cf7e1ae
+Authorization: fd1d361314ec83428c05fac1bb3057143dff5ca6e7c209c3f61e4457c82905ff99d58e250c95d4bba4a0712f184daa18
 
 {
 
-    "num": "1002",
+    "num": "1003",
     "name": "Chang",
     "password": "123456",
     "role": 1
 
 }
 
-###
+###  更新用户密码（基于登录状态）
 
 PATCH http://localhost:8080/api/updatePwd
 Content-Type: application/json
-Authorization: 80d645359e0d80ba0a0c97a5e7e3414c8e0463a279990f37b6aa80413f5bcb4c414777762f8b452c7cb941575cf7e1ae
+Authorization: 9a24135837a7f19634314c90b076232acf98a24dfd3cd1eef82a42886f75e73993321cac21966f900b75cde46c82f074
 
 {
-  "password": "1001"
+  "password": "123456"
 }
+
+
+### 设置实际指导学生数/符合的学生数
+
+PATCH http://localhost:8080/api/teacher/patchAmount
+Content-Type: application/json
+Authorization: fd1d361314ec83428c05fac1bb3057143dff5ca6e7c209c3f61e4457c82905ff99d58e250c95d4bba4a0712f184daa18
+
+{
+  "totalStudents": 6
+}
+
+### 添加方向
+POST http://localhost:8080/api/teacher/addDirection
+Content-Type: application/json
+Authorization: fd1d361314ec83428c05fac1bb3057143dff5ca6e7c209c3f61e4457c82905ff99d58e250c95d4bba4a0712f184daa18
+
+{
+  "detail": "Java后端研发"
+}
+
+### 修改方向
+PATCH http://localhost:8080/api/teacher/updateDirection
+Content-Type: application/json
+Authorization: fd1d361314ec83428c05fac1bb3057143dff5ca6e7c209c3f61e4457c82905ff99d58e250c95d4bba4a0712f184daa18
+
+{
+  "detail": "WEB",
+  "id": 2
+}
+
+### 添加课程
+
+POST http://localhost:8080/api/teacher/addCourses
+Content-Type: application/json
+Authorization: fd1d361314ec83428c05fac1bb3057143dff5ca6e7c209c3f61e4457c82905ff99d58e250c95d4bba4a0712f184daa18
+
+{
+  "courseName": "JAVA",
+  "weight": 0.6
+}
+
+### 设置课程权重/最低分
+POST http://localhost:8080/api/teacher/setWeight
+Content-Type: application/json
+Authorization: fd1d361314ec83428c05fac1bb3057143dff5ca6e7c209c3f61e4457c82905ff99d58e250c95d4bba4a0712f184daa18
+
+{
+  "id": 1,
+  "weight": 0.4,
+  "lowestScore":60
+}
+
+### 添加学生课程成绩
+POST http://localhost:8080/api/teacher/addStuScore/course/2/student/3
+Content-Type: application/json
+Authorization: fd1d361314ec83428c05fac1bb3057143dff5ca6e7c209c3f61e4457c82905ff99d58e250c95d4bba4a0712f184daa18
+
+{
+  "score": 65.0
+}
+
+### 修改学生成绩
+PATCH http://localhost:8080/api/teacher/updateStuScore/course/1/student/3
+Content-Type: application/json
+Authorization: fd1d361314ec83428c05fac1bb3057143dff5ca6e7c209c3f61e4457c82905ff99d58e250c95d4bba4a0712f184daa18
+
+{
+  "score":60.0
+}
+
+### 修改学生
+PATCH http://localhost:8080/api/teacher/patchStu/2
+Content-Type: application/json
+Authorization: fd1d361314ec83428c05fac1bb3057143dff5ca6e7c209c3f61e4457c82905ff99d58e250c95d4bba4a0712f184daa18
+
+{
+  "name": "Wang",
+  "num": "2017214228",
+  "password": "2017214228",
+  "role": 0
+}
+### 选择学生
+POST http://localhost:8080/api/teacher/1/addStu
+Content-Type: application/json
+Authorization: fd1d361314ec83428c05fac1bb3057143dff5ca6e7c209c3f61e4457c82905ff99d58e250c95d4bba4a0712f184daa18
+
+{
+  "id": 2
+}
+
+### 进入教师首页
+GET http://localhost:8080/api/teacher/index
+Authorization: 34f9bd35e4f01e1f6e82b2e61eb005b366ed57aec17e44c4c5cb5fb3b1fbfa0690e71510c379bca97caba7f47d719051
+
+### 学生首页
+GET http://localhost:8080/api/stu/index
+Authorization: 955b0d0d7d54ca96b76fa53e6332955b419c88995bed00a160ad94995661de8e8b61007242b210df46f578408043e2d5
 
 ###

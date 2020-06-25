@@ -4,8 +4,8 @@ import com.example.graduation_design.entity.*;
 import com.example.graduation_design.repository.*;
 import com.example.graduation_design.service.TeacherService;
 import com.example.graduation_design.service.UserService;
-import com.example.graduation_design.service.courseService;
-import com.example.graduation_design.service.studentService;
+import com.example.graduation_design.service.CourseService;
+import com.example.graduation_design.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,11 +43,11 @@ public class courseTest {
     UserService userService;
 
     @Autowired
-    studentService studentService;
+    StudentService studentService;
     @Autowired
     TeacherService teacherService;
     @Autowired
-    courseService courseService;
+    CourseService courseService;
     @Autowired
     PasswordEncoder encoder;
 
@@ -55,9 +55,9 @@ public class courseTest {
     @Test
     public void addStu() {
         User u = new User();
-        u.setName("Qin");
-        u.setNum("2017214228");
-        u.setPassword(encoder.encode("2017214228"));
+        u.setName("WangBin");
+        u.setNum("2017214229");
+        u.setPassword(encoder.encode("2017214229"));
         u.setRole(User.Role.STUDENT);
         Student s = new Student();
         s.setUser(u);
@@ -84,7 +84,7 @@ public class courseTest {
 
     @Test
     public void updateTeacher() {
-        teacherService.updateTeacher(4, 10, 20);
+        teacherService.updateTeacher(4, 10);
     }
 
     @Test

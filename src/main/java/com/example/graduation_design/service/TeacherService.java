@@ -11,8 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.ExcludeSuperclassListeners;
-import java.util.Map;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -34,11 +33,16 @@ public class TeacherService {
         teacherRepository.save(teacher);
     }
 
-    public void updateTeacher(int tid, int stuNum, int range) {
+    /**
+     * 设置可指导学生数
+     *
+     * @param tid
+     * @param stuNum
+     */
+    public void updateTeacher(int tid, int stuNum) {
         Teacher t = teacherRepository.findById(tid).orElse(null);
         if (t != null) {
             t.setTotalStudents(stuNum);
-            t.setSuitableStudents(range);
             teacherRepository.save(t);
         } else log.debug("{}", "没有找到该用户");
     }
@@ -65,8 +69,35 @@ public class TeacherService {
         else log.debug("{}", "选择的导师或者学生不存在");
     }
 
+    /**
+     * 根据名字得到教师
+     *
+     * @param num
+     * @return
+     */
     public Teacher getTeacherByNum(String num) {
         Teacher t = teacherRepository.findByUser_Num(num);
         return t;
+    }
+
+    /**
+     * 根据id得到教师
+     *
+     * @param id
+     * @return
+     */
+    public Teacher getTeacherById(int id) {
+        return teacherRepository.findById(id).orElse(null);
+    }
+
+    public directions getDirectionById(int id) {
+        return directionsRepository.findById(id).orElse(null);
+    }
+
+    public void updateSuitableStus(int amount) {
+        Teacher teacher = teacherRepository.findById(1).orElse(null);
+
+        teacher.setSuitableStudents(amount);
+        teacherRepository.save(teacher);
     }
 }

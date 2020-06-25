@@ -4,4 +4,5 @@ import com.example.graduation_design.entity.Student;
 
 public interface StudentRepository extends baseRepository<Student, Integer> {
 
+    Student findByUser_Num(int num);
 }

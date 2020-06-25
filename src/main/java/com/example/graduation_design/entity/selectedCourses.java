@@ -2,10 +2,9 @@ package com.example.graduation_design.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.util.Lazy;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data

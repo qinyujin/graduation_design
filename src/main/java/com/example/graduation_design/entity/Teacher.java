@@ -1,5 +1,6 @@
 package com.example.graduation_design.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import java.util.List;
 @Data
 @Entity
 @NoArgsConstructor
+@JsonIgnoreProperties({"courses","students"})
 public class Teacher {
 
     @Id
