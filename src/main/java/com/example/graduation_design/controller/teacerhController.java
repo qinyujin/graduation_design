@@ -157,6 +157,7 @@ public class teacerhController {
         log.debug("{}", s);
         int sid=s.getId();
         if(s==null)throw new  ResponseStatusException(HttpStatus.BAD_REQUEST,"学生不存在");
+        updateSuitable.update();
         courseService.addStu(cid, sc.getScore(), sid);
         return sc;
     }

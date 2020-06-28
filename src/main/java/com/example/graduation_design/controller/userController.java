@@ -36,6 +36,19 @@ public class userController {
         } else return "密码不能与原始密码相同";
     }
 
+    /**
+     * 忘记的时候重置密码
+     * @param user
+     * @return
+     */
+    @PatchMapping("resetPassword")
+    public Map resetPassword(@RequestBody User user){
+       int uid=userService.getUserByNum(user.getNum()).getId();
+        log.debug("uid:{}", uid);
+        userService.updatePwd(uid, String.valueOf(user.getNum()));
+        return Map.of("password",user.getNum());
+    }
+
     @GetMapping("directions")
     public Map getDirections() {
         List<directions> directionsList = userService.getDirections();

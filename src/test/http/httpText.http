@@ -39,7 +39,7 @@ Authorization: fd1d361314ec83428c05fac1bb3057143dff5ca6e7c209c3f61e4457c82905ff9
 
 PATCH http://localhost:8080/api/updatePwd
 Content-Type: application/json
-Authorization: 20937d55ec6a6be8912c233755c3d858c137b9ca05aa78f58049cfffbd429cffae4ded18f93a4c59ce7a10f0d61ae374
+Authorization: c1d10d9f36bab6c9182165cd0fdce644bf836d0334328b0e8926627ca3e32a690055264e4be65e495b5e579d9395542b
 
 {
   "password": "123456"
@@ -153,5 +153,13 @@ Authorization: 1b906fe83c720108c65125f1e218ed968d105f70621704002f2bdb8964d7f3812
 ### 获得排序后的学生
 GET http://localhost:8080/api/teacher/sortStudents
 Authorization: 34f9bd35e4f01e1f6e82b2e61eb005b366ed57aec17e44c4c5cb5fb3b1fbfa0690e71510c379bca97caba7f47d719051
+
+### 重置密码
+PATCH http://localhost:8080/api/resetPassword
+Content-Type: application/json
+
+{
+  "num": 2017214228
+}
 
 ###
