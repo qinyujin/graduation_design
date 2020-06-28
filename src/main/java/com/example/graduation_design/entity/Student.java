@@ -2,6 +2,7 @@ package com.example.graduation_design.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.xml.fastinfoset.algorithm.BooleanEncodingAlgorithm;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +21,8 @@ public class Student {
     private User user;
 
     private double weightScore;//学生加权分数
+
+    private boolean agree=false;//是否同意选王波老师，默认不同意
 
     @ManyToOne
     private Teacher teacher;

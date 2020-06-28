@@ -1,5 +1,7 @@
 package com.example.graduation_design;
 
+import com.example.graduation_design.component.enableSelect;
+import com.example.graduation_design.component.sortStudents;
 import com.example.graduation_design.entity.*;
 import com.example.graduation_design.repository.*;
 import com.example.graduation_design.service.TeacherService;
@@ -14,6 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 @SpringBootTest
@@ -50,6 +54,10 @@ public class courseTest {
     CourseService courseService;
     @Autowired
     PasswordEncoder encoder;
+    @Autowired
+    private sortStudents sortStudents;
+    @Autowired
+    private enableSelect enableSelect;
 
 
     @Test
@@ -125,7 +133,17 @@ public class courseTest {
 
 
     @Test
-    public void testAny() {
-        System.out.println(salt);
+    public void testSort() {
+        List<Student> students = sortStudents.sortAllStuByScore();
+        students.forEach(s -> {
+            System.out.println(s.getUser().getName()+" "+s.getWeightScore());
+        });
+
     }
+
+    @Test
+    public void selectable(){
+        enableSelect.allowSelect();
+    }
+
 }

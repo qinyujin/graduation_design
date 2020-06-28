@@ -28,7 +28,7 @@ public class updateSuitable {
         //在所有学生中找到各科分数均大于合格线的,并且更新教师的合适学生数,由于只有王波老师使用，就简单实现
         //如何判断合格：简单判断法：每一门课程的最低分加上权重得到最终的一个成绩值，只有学生的平均加权成绩大于等于这个值才算合格.
 
-        //计算aim
+        //计算aim即目标合格分数
         courseRepository.findAll().forEach(c ->{
             log.debug("{}", c.getWeight()+" "+c.getLowestScore()+" "+c.getWeight()*c.getLowestScore());
             aim+=c.getWeight()*c.getLowestScore();
@@ -48,6 +48,7 @@ public class updateSuitable {
                     );
 
                     log.debug("{}",s.getId()+":"+sum);
+                    s.setWeightScore(sum);
                     if(sum<aim)suit=false;
 
                     if(suit){//如果符合条件

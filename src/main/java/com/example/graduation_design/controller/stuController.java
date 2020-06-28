@@ -1,5 +1,6 @@
 package com.example.graduation_design.controller;
 
+import com.example.graduation_design.component.enableSelect;
 import com.example.graduation_design.component.requestComponent;
 import com.example.graduation_design.entity.Course;
 import com.example.graduation_design.entity.Student;
@@ -24,6 +25,8 @@ public class stuController {
     private StudentService studentService;
     @Autowired
     private requestComponent requestComponent;
+    @Autowired
+    private enableSelect enableSelect;
 
 
     @GetMapping("index")
@@ -32,6 +35,17 @@ public class stuController {
         log.debug("{}", student.getId());
         List<Course> courses= studentService.getCourses(requestComponent.getUid());
 
-        return Map.of("courses", courses);
+        return Map.of("student",student,"selectedCourses",student.getSelectedCourses(),
+                "allowSelect",enableSelect.allowSelect());
     }
+
+
+    @GetMapping("agree")
+    public Map agree(){
+        Student stu = studentService.getStudentById(requestComponent.getUid());
+        stu.setAgree(true);
+        studentService.updateStu(stu.getId(), stu);
+       return Map.of("student",stu);
+    }
+
 }

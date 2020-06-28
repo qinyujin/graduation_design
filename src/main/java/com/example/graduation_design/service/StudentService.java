@@ -43,7 +43,7 @@ public class StudentService {
         return studentRepository.findById(id).orElse(null);
     }
 
-    public Student getStudentByNum(int num) {
+    public Student getStudentByNum(String num) {
         return studentRepository.findByUser_Num(num);
     }
 

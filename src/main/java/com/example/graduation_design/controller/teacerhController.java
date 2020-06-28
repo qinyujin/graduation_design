@@ -1,6 +1,8 @@
 package com.example.graduation_design.controller;
 
+import com.example.graduation_design.component.enableSelect;
 import com.example.graduation_design.component.requestComponent;
+import com.example.graduation_design.component.sortStudents;
 import com.example.graduation_design.component.updateSuitable;
 import com.example.graduation_design.entity.*;
 import com.example.graduation_design.service.StudentService;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/teacher/")
@@ -35,6 +36,10 @@ public class teacerhController {
     private requestComponent  requestComponent;
     @Autowired
     private updateSuitable updateSuitable;
+    @Autowired
+    private sortStudents sortStudents;
+    @Autowired
+    private enableSelect enableSelect;
 
     @GetMapping("index")
     public Map index(){
@@ -87,7 +92,7 @@ public class teacerhController {
     @PostMapping("addDirection")
     public  Map addDirection(@RequestBody directions d){
         teacherService.addDirections(d);
-        return Map.of("添加的方向", d);
+        return Map.of("direction", d);
     }
 
     /**
@@ -143,12 +148,14 @@ public class teacerhController {
      * 添加学生成绩单
      * @param sc
      * @param cid
-     * @param sid
+     * @param num
      * @return
      */
-    @PostMapping("addStuScore/course/{cid}/student/{sid}")
-    public selectedCourses addStuScore(@RequestBody selectedCourses sc,@PathVariable int cid,@PathVariable int sid){
-        Student s= studentService.getStudentById(sid);
+    @PostMapping("addStuScore/course/{cid}/student/{num}")
+    public selectedCourses addStuScore(@RequestBody selectedCourses sc,@PathVariable int cid,@PathVariable int num){
+        Student s= studentService.getStudentByNum(String.valueOf(num));
+        log.debug("{}", s);
+        int sid=s.getId();
         if(s==null)throw new  ResponseStatusException(HttpStatus.BAD_REQUEST,"学生不存在");
         courseService.addStu(cid, sc.getScore(), sid);
         return sc;
@@ -158,12 +165,15 @@ public class teacerhController {
      * 修改学生课程成绩
      * @param sc
      * @param cid
-     * @param sid
+     * @param num
      * @return
      */
-    @PatchMapping("updateStuScore/course/{cid}/student/{sid}")
-    public Map updateStuScore(@RequestBody selectedCourses sc, @PathVariable int cid,@PathVariable int sid){
+    @PatchMapping("updateStuScore/course/{cid}/student/{num}")
+    public Map updateStuScore(@RequestBody selectedCourses sc, @PathVariable int cid,@PathVariable int num){
+        Student stu = studentService.getStudentByNum(String.valueOf(num));
         Course c=courseService.getCourseById(cid);
+        int sid=stu.getId();
+
         courseService.updateCourseStu(cid, sid, sc.getScore());
         return Map.of(c.getCourseName()+"课程分数改为：",sc.getScore());
     }
@@ -176,8 +186,16 @@ public class teacerhController {
      */
     @PostMapping("{tid}/addStu")
     public String addStu(@RequestBody User user,@PathVariable int tid){
-        User u=userService.getUserById(user.getId());
-        teacherService.addTeacherStu(tid, user.getId());
+        User u=userService.getUserByNum(user.getNum());
+        Student stu = studentService.getStudentById(u.getId());
+        log.debug("{}", u);
+        if(enableSelect.allowSelect()){
+            //需要添加学生同意条件
+            if(stu.isAgree())
+                teacherService.addTeacherStu(tid, u.getId());
+            else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "该学生还未选择你当老师");
+        }
+        else throw new  ResponseStatusException(HttpStatus.BAD_REQUEST,"选择的学生已经达到上限");
         return  u.getName();
     }
 
@@ -192,6 +210,10 @@ public class teacerhController {
         return  teacher.getTotalStudents();
     }
 
+    @GetMapping("sortStudents")
+    public Map sortStudents(){
+        return Map.of("sortStudents",sortStudents.sortAllStuByScore()) ;
+    }
 
 
 }
